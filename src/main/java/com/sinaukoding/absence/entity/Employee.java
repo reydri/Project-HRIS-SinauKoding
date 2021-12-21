@@ -21,11 +21,11 @@ public class Employee extends BaseEntity<Employee> {
         PASIVE
     }
 
-    @Column(name = "start-date")
+    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    @Column(name = "end-date")
+    @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
