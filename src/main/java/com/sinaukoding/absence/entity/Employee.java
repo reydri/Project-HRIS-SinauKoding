@@ -34,7 +34,7 @@ public class Employee extends BaseEntity<Employee> {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private StatusEmployee statusEmployee = StatusEmployee.ACTIVE;
+    private StatusEmployee status = StatusEmployee.ACTIVE;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
