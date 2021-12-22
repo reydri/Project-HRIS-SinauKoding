@@ -5,6 +5,9 @@ import com.sinaukoding.absence.dao.BaseDAO;
 import com.sinaukoding.absence.dao.AttendanceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 
 @Service
@@ -16,5 +19,31 @@ public class AttendanceService extends BaseService<Attendance> {
     @Override
     protected BaseDAO<Attendance> getDAO() {
         return dao;
+    }
+
+    @Transactional
+    public Attendance save(Attendance entity){
+        entity.setDate(new Date());
+        entity.setStartTime(new Date());
+
+        return dao.save(entity);
+    }
+
+    public Attendance update(Attendance entity){
+        if (entity.getId() != null){
+            Attendance reference = getDAO().findReference(entity.getId());
+
+            reference.setEndTime(entity.getEndTime() != null
+                    ? entity.getEndTime()
+                    : new Date());
+
+            entity.setDate(reference.getDate());
+            entity.setStartTime(reference.getStartTime());
+            entity.setEndTime(reference.getEndTime());
+
+            return entity;
+        }
+
+        return null;
     }
 }
