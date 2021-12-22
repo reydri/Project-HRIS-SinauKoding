@@ -31,4 +31,32 @@ public class AttendanceController extends BaseController {
 
         return new RestResult(rows > 0 ? service.find(attendance, offset, limit) : new ArrayList<>(), rows);
     }
+
+    @PostMapping
+    public RestResult save(@RequestBody Attendance entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
+
+        if (entity != null){
+            result.setData(service.save(entity));
+            result.setStatus(StatusCode.SAVE_SUCCESS);
+        }
+        return result;
+    }
+
+    @PutMapping
+    public RestResult update(@RequestBody Attendance entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
+
+        if(entity != null){
+            result.setData(service.update(entity));
+            result.setStatus(service.update(entity) != null ? StatusCode.UPDATE_SUCCESS : StatusCode.UPDATE_FAILED);
+        }
+
+        return result;
+    }
+
+    @DeleteMapping(value = "{id}")
+    public RestResult delete(@PathVariable Long id){
+        return new RestResult(service.delete(id) ? StatusCode.DELETE_SUCCESS : StatusCode.DELETE_FAILED);
+    }
 }

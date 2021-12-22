@@ -33,17 +33,26 @@ public class EmployeeController extends BaseController {
     }
 
     @PostMapping
-    public RestResult save(@RequestBody Employee param){
-        param = service.save(param);
+    public RestResult save(@RequestBody Employee entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
 
-        return new RestResult(param, param != null ? StatusCode.SAVE_SUCCESS : StatusCode.SAVE_FAILED);
+        if (entity != null){
+            result.setData(service.save(entity));
+            result.setStatus(StatusCode.SAVE_SUCCESS);
+        }
+        return result;
     }
 
     @PutMapping
-    public RestResult update(@RequestBody Employee employee){
-        employee = service.update(employee);
+    public RestResult update(@RequestBody Employee entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
 
-        return new RestResult(employee, employee != null ? StatusCode.UPDATE_SUCCESS : StatusCode.UPDATE_FAILED);
+        if(entity != null){
+            result.setData(service.update(entity));
+            result.setStatus(service.update(entity) != null ? StatusCode.UPDATE_SUCCESS : StatusCode.UPDATE_FAILED);
+        }
+
+        return result;
     }
 
     @DeleteMapping(value = "{id}")
