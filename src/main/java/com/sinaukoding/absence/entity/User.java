@@ -21,6 +21,10 @@ public class User extends BaseEntity<User>{
         ROLE_ADMIN
     }
 
+    public User(String username) {
+        this.username = username;
+    }
+
     @Column(name = "role", columnDefinition = "VARCHAR(50)")
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
@@ -34,11 +38,14 @@ public class User extends BaseEntity<User>{
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "token")
+    private String token;
+
     @Column(name = "no_rekening")
     private String noRekening;
 
     @Column(name = "active")
-    private Integer active;
+    private Boolean active = Boolean.TRUE;
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
