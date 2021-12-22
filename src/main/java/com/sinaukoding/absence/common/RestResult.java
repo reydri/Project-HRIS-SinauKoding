@@ -19,10 +19,8 @@ public class RestResult implements Serializable {
 
     private String status = StatusCode.OPERATION_SUCCESS;
 
-    public RestResult(Object data, Long rows, String status) {
+    public RestResult(Object data) {
         this.data = data;
-        this.rows = rows;
-        this.status = status;
     }
 
     public RestResult(Object data, Long rows){
