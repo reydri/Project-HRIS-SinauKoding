@@ -1,5 +1,6 @@
 package com.sinaukoding.absence.service;
 
+import com.sinaukoding.absence.AbsenceApplication;
 import com.sinaukoding.absence.entity.Employee;
 import com.sinaukoding.absence.dao.BaseDAO;
 import com.sinaukoding.absence.dao.EmployeeDAO;
@@ -24,6 +25,7 @@ public class EmployeeService extends BaseService<Employee> {
     @Transactional
     public Employee save(Employee entity){
         entity.setStartDate(new Date());
+        entity.setUser(AbsenceApplication.getCurrentUser());
 
         return dao.save(entity);
     }
