@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -29,6 +31,7 @@ public class AttendanceService extends BaseService<Attendance> {
         return dao.save(entity);
     }
 
+    @Transactional
     public Attendance update(Attendance entity){
         if (entity.getId() != null){
             Attendance reference = getDAO().findReference(entity.getId());
@@ -45,5 +48,11 @@ public class AttendanceService extends BaseService<Attendance> {
         }
 
         return null;
+    }
+
+    @Transactional
+    public Collection<Attendance> findByDate(Attendance entity, Date startDate, Date endDate){
+        Collection<Attendance> result = dao.findByDate(entity, startDate, endDate);
+        return result.size() > 0 ? result : new ArrayList<>();
     }
 }

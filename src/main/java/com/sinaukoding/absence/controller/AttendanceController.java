@@ -6,6 +6,7 @@ import com.sinaukoding.absence.common.RestResult;
 import com.sinaukoding.absence.common.StatusCode;
 import com.sinaukoding.absence.entity.Attendance;
 import com.sinaukoding.absence.service.AttendanceService;
+import com.sinaukoding.absence.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,24 @@ public class AttendanceController extends BaseController {
         long rows = service.count(attendance);
 
         return new RestResult(rows > 0 ? service.find(attendance, offset, limit) : new ArrayList<>(), rows);
+    }
+
+    @GetMapping("/by-date")
+    public RestResult findByDate(@RequestParam(value = "param", required = false) String param,
+                                 @RequestParam(value = "start-date") String startDate,
+                                 @RequestParam(value = "end-date") String endDate) throws JsonProcessingException {
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
+
+        Attendance attendance = param != null ? new ObjectMapper().readValue(param, Attendance.class) : new Attendance();
+
+        result.setData(service.findByDate(attendance,
+                DateUtils.fromString(startDate),
+                DateUtils.fromString(endDate)));
+        result.setRows((long) service.findByDate(attendance,
+                DateUtils.fromString(startDate),
+                DateUtils.fromString(endDate)).size());
+
+        return result;
     }
 
     @PostMapping
