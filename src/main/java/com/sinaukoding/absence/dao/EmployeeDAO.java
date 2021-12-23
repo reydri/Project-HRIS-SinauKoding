@@ -17,13 +17,13 @@ public class EmployeeDAO extends BaseDAO<Employee> {
 
         if (param != null){
             if (param.getStatus() != null){
-                predicates.add(builder.equal(root.get("status"), param.getStatus()));
+                predicates.add(builder.like(root.get("status"), "%" + param.getStatus() + "%"));
             }
         }
 
         if (param != null){
             if (param.getNip() != null){
-                predicates.add(builder.equal(root.get("nip"), param.getNip()));
+                predicates.add(builder.like(root.get("nip"), "%" + param.getNip() + "%"));
             }
         }
 
