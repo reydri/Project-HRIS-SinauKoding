@@ -39,8 +39,13 @@ public class EmployeeService extends BaseService<Employee> {
                     ? entity.getEndDate()
                     : new Date());
 
+            reference.setStatus(reference.getStatus().equals(Employee.StatusEmployee.ACTIVE)
+                    ? Employee.StatusEmployee.INACTIVE
+                    : reference.getStatus());
+
             entity.setStartDate(reference.getStartDate());
             entity.setEndDate(reference.getEndDate());
+            entity.setStatus(reference.getStatus());
 
             return entity;
         }
