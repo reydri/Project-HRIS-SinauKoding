@@ -15,7 +15,10 @@ public class AttendanceDAO extends BaseDAO<Attendance> {
         List<Predicate> predicates = super.predicates(param, builder, root,isCount);
 
         if(!isCount){
-            root.fetch("employee", JoinType.INNER);
+            root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("bank", JoinType.INNER);
+            root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("company", JoinType.INNER);
+            root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("division", JoinType.INNER);
+            root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("position", JoinType.INNER);
         }
 
         return predicates;
