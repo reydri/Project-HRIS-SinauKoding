@@ -18,7 +18,7 @@ public class Employee extends BaseEntity<Employee> {
 
     public enum StatusEmployee {
         ACTIVE,
-        PASIVE
+        INACTIVE
     }
 
     @Column(name = "start_date")
