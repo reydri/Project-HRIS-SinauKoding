@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("attendances")
-@PreAuthorize("permitAll()")
 public class AttendanceController extends BaseController {
 
     @Autowired

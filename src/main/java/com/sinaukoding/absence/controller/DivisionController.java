@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("divisions")
-@PreAuthorize("permitAll()")
 public class DivisionController extends BaseController {
 
     @Autowired

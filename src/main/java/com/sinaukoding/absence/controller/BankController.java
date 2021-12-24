@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("banks")
-@PreAuthorize("permitAll()")
 public class BankController extends BaseController {
 
     @Autowired

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("employees")
-@PreAuthorize("permitAll()")
 public class EmployeeController extends BaseController {
 
     @Autowired

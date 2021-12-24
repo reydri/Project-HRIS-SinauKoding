@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("positions")
-@PreAuthorize("permitAll()")
 public class PositionController extends BaseController {
 
     @Autowired
