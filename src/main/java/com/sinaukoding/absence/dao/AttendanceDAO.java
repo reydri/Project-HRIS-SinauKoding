@@ -41,7 +41,10 @@ public class AttendanceDAO extends BaseDAO<Attendance> {
         query.where(builder.between(root.get("date"), startDate, endDate));
         query.orderBy(builder.asc(root.get("id")));
 
-        root.fetch("employee", JoinType.INNER);
+        root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("bank", JoinType.INNER);
+        root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("company", JoinType.INNER);
+        root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("division", JoinType.INNER);
+        root.fetch("employee", JoinType.INNER).fetch("user", JoinType.INNER).fetch("position", JoinType.INNER);
 
         TypedQuery<Attendance> typedQuery = entityManager.createQuery(query);
 
