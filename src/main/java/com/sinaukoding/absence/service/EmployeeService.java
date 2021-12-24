@@ -4,6 +4,7 @@ import com.sinaukoding.absence.AbsenceApplication;
 import com.sinaukoding.absence.entity.Employee;
 import com.sinaukoding.absence.dao.BaseDAO;
 import com.sinaukoding.absence.dao.EmployeeDAO;
+import com.sinaukoding.absence.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,5 +52,9 @@ public class EmployeeService extends BaseService<Employee> {
         }
 
         return null;
+    }
+
+    public Employee findByUserId(User param) {
+        return dao.findByUserId(param);
     }
 }

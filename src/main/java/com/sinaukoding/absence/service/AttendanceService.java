@@ -1,5 +1,6 @@
 package com.sinaukoding.absence.service;
 
+import com.sinaukoding.absence.AbsenceApplication;
 import com.sinaukoding.absence.entity.Attendance;
 import com.sinaukoding.absence.dao.BaseDAO;
 import com.sinaukoding.absence.dao.AttendanceDAO;
@@ -23,10 +24,14 @@ public class AttendanceService extends BaseService<Attendance> {
         return dao;
     }
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @Transactional
     public Attendance save(Attendance entity){
         entity.setDate(new Date());
         entity.setStartTime(new Date());
+        entity.setEmployee(employeeService.findByUserId(AbsenceApplication.getCurrentUser()));
 
         return dao.save(entity);
     }
@@ -43,6 +48,40 @@ public class AttendanceService extends BaseService<Attendance> {
             entity.setDate(reference.getDate());
             entity.setStartTime(reference.getStartTime());
             entity.setEndTime(reference.getEndTime());
+
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public Attendance startRest(Attendance entity){
+        if (entity.getId() != null) {
+            Attendance reference = getDAO().findReference(entity.getId());
+
+            reference.setRestStartTime(entity.getRestStartTime() != null
+                    ? entity.getRestStartTime()
+                    : new Date());
+
+            entity.setRestStartTime(reference.getRestStartTime());
+
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public Attendance endRest(Attendance entity){
+        if (entity.getId() != null) {
+            Attendance reference = getDAO().findReference(entity.getId());
+
+            reference.setRestEndTime(entity.getRestEndTime() != null
+                    ? entity.getRestEndTime()
+                    : new Date());
+
+            entity.setRestEndTime((reference.getRestEndTime()));
 
             return entity;
         }
