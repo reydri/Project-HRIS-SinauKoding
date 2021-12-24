@@ -16,4 +16,8 @@ public class DivisionService extends BaseService<Division> {
     protected BaseDAO<Division> getDAO() {
         return dao;
     }
+
+    public Division findByName(Division param) {
+        return dao.findByName(param);
+    }
 }
