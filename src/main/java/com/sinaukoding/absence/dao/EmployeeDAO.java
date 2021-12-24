@@ -1,12 +1,11 @@
 package com.sinaukoding.absence.dao;
 
 import com.sinaukoding.absence.entity.Employee;
+import com.sinaukoding.absence.entity.User;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -35,5 +34,25 @@ public class EmployeeDAO extends BaseDAO<Employee> {
         }
 
         return predicates;
+    }
+
+    public Employee findByUserId(User param) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
+
+        Root<Employee> root = query.from(Employee.class);
+
+        Predicate p = builder.equal(root.get("user").get("id"), param.getId());
+        query.where(p);
+
+        root.fetch("user",JoinType.INNER).fetch("bank", JoinType.INNER);
+        root.fetch("user",JoinType.INNER).fetch("company", JoinType.INNER);
+        root.fetch("user",JoinType.INNER).fetch("position", JoinType.INNER);
+        root.fetch("user",JoinType.INNER).fetch("division", JoinType.INNER);
+
+        TypedQuery<Employee> result = entityManager.createQuery(query);
+        List<Employee> resultList = result.getResultList();
+
+        return resultList.size() > 0 ? resultList.get(0) : new Employee();
     }
 }
