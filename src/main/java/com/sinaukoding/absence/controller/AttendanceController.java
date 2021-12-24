@@ -74,6 +74,30 @@ public class AttendanceController extends BaseController {
         return result;
     }
 
+    @PutMapping("/start-rest")
+    public RestResult startRest(@RequestBody Attendance entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
+
+        if (entity != null){
+            result.setData(service.startRest(entity));
+            result.setStatus(StatusCode.UPDATE_SUCCESS);
+        }
+
+        return result;
+    }
+
+    @PutMapping("/end-rest")
+    public RestResult endRest(@RequestBody Attendance entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
+
+        if (entity != null){
+            result.setData(service.endRest(entity));
+            result.setStatus(StatusCode.UPDATE_SUCCESS);
+        }
+
+        return result;
+    }
+
     @DeleteMapping(value = "{id}")
     public RestResult delete(@PathVariable Long id){
         return new RestResult(service.delete(id) ? StatusCode.DELETE_SUCCESS : StatusCode.DELETE_FAILED);
