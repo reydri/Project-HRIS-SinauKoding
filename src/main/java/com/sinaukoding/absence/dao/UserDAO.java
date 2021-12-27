@@ -31,6 +31,10 @@ public class UserDAO extends BaseDAO<User> {
             if (param.getReligion() != null){
                 predicates.add(builder.like(root.get("religion"), "%" + param.getReligion() + "%"));
             }
+
+            if (param.getActive() != null){
+                predicates.add(builder.like(root.get("active"), "%" + param.getActive() + "%"));
+            }
         }
 
         if (!isCount){
