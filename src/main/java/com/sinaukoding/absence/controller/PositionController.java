@@ -7,7 +7,6 @@ import com.sinaukoding.absence.common.StatusCode;
 import com.sinaukoding.absence.entity.Position;
 import com.sinaukoding.absence.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -47,6 +46,14 @@ public class PositionController extends BaseController {
 
     @DeleteMapping(value = "{id}")
     public RestResult delete(@PathVariable Long id){
-        return new RestResult(service.delete(id) ? StatusCode.DELETE_SUCCESS : StatusCode.DELETE_FAILED);
+        boolean deleted = false;
+        Position position = service.searchById(id);
+
+        if (position != null){
+            service.statusDelete(id);
+            deleted = service.delete(id);
+        }
+
+        return new RestResult(deleted ? StatusCode.DELETE_SUCCESS : StatusCode.DELETE_FAILED);
     }
 }

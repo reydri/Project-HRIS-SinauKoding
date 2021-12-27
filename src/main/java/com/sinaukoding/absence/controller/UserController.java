@@ -30,9 +30,28 @@ public class UserController {
     }
 
     @PutMapping
-    public RestResult update(@RequestBody User user){
-        user = service.update(user);
+    public RestResult update(@RequestBody User entity){
+        RestResult result = new RestResult(StatusCode.OPERATION_FAILED);
 
-        return new RestResult(user, user != null ? StatusCode.UPDATE_SUCCESS : StatusCode.UPDATE_FAILED);
+        if(entity != null){
+            result.setData(service.update(entity));
+            result.setStatus(service.update(entity) != null ? StatusCode.UPDATE_SUCCESS : StatusCode.UPDATE_FAILED);
+        }
+
+        return result;
+    }
+
+    @DeleteMapping(value = "{id}")
+    public RestResult delete(@PathVariable Long id){
+        boolean deleted = false;
+        User user = service.searchById(id);
+
+        if (user != null){
+            service.inactiveUser(user);
+            service.statusDelete(id);
+            deleted = service.delete(id);
+        }
+
+        return new RestResult(deleted ? StatusCode.DELETE_SUCCESS : StatusCode.DELETE_FAILED);
     }
 }
