@@ -45,8 +45,6 @@ public class AttendanceService extends BaseService<Attendance> {
                     ? entity.getEndTime()
                     : new Date());
 
-            entity.setDate(reference.getDate());
-            entity.setStartTime(reference.getStartTime());
             entity.setEndTime(reference.getEndTime());
 
             return entity;
