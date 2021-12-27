@@ -36,6 +36,23 @@ public class EmployeeService extends BaseService<Employee> {
         if (entity.getId() != null) {
             Employee reference = getDAO().findReference(entity.getId());
 
+            reference.setNip(entity.getNip() != null
+                    ? entity.getNip()
+                    : reference.getNip());
+
+            entity.setNip(reference.getNip());
+
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public void inactiveStatus(Employee entity) {
+        if (entity.getId() != null) {
+            Employee reference = getDAO().findReference(entity.getId());
+
             reference.setEndDate(entity.getEndDate() != null
                     ? entity.getEndDate()
                     : new Date());
@@ -43,15 +60,7 @@ public class EmployeeService extends BaseService<Employee> {
             reference.setStatus(reference.getStatus().equals(Employee.StatusEmployee.ACTIVE)
                     ? Employee.StatusEmployee.INACTIVE
                     : reference.getStatus());
-
-            entity.setStartDate(reference.getStartDate());
-            entity.setEndDate(reference.getEndDate());
-            entity.setStatus(reference.getStatus());
-
-            return entity;
         }
-
-        return null;
     }
 
     public Employee findByUserId(User param) {

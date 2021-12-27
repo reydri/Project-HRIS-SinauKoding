@@ -2,6 +2,7 @@ package com.sinaukoding.absence.service;
 
 import com.sinaukoding.absence.common.RestResult;
 import com.sinaukoding.absence.common.StatusCode;
+import com.sinaukoding.absence.entity.Employee;
 import com.sinaukoding.absence.entity.User;
 import com.sinaukoding.absence.dao.BaseDAO;
 import com.sinaukoding.absence.dao.UserDAO;
@@ -78,5 +79,97 @@ public class UserService extends BaseService<User> {
         }
 
         return result;
+    }
+
+    @Transactional
+    public User update(User entity){
+        if (entity.getId() != null){
+            User reference = getDAO().findReference(entity.getId());
+
+            reference.setProfileName(entity.getProfileName() != null
+                    ? entity.getProfileName()
+                    : reference.getProfileName());
+
+            reference.setNickName(entity.getNickName() != null
+                    ? entity.getNickName()
+                    : reference.getNickName());
+
+            reference.setReligion(entity.getReligion() != null
+                    ? entity.getReligion()
+                    : reference.getReligion());
+
+            reference.setPhone(entity.getPhone() != null
+                    ? entity.getPhone()
+                    : reference.getPhone());
+
+            reference.setPendidikanTerakhir(entity.getPendidikanTerakhir() != null
+                    ? entity.getPendidikanTerakhir()
+                    : reference.getPendidikanTerakhir());
+
+            reference.setPhone(entity.getPhone() != null
+                    ? entity.getPhone()
+                    : reference.getPhone());
+
+            reference.setMaritalStatus(entity.getMaritalStatus() != null
+                    ? entity.getMaritalStatus()
+                    : reference.getMaritalStatus());
+
+            reference.setDateofBirth(entity.getDateofBirth() != null
+                    ? entity.getDateofBirth()
+                    : reference.getDateofBirth());
+
+            reference.setPlaceofBirth(entity.getPlaceofBirth() != null
+                    ? entity.getPlaceofBirth()
+                    : reference.getPlaceofBirth());
+
+            reference.setNoKtp(entity.getNoKtp() != null
+                    ? entity.getNoKtp()
+                    : reference.getNoKtp());
+
+            reference.setNoRekening(entity.getNoRekening() != null
+                    ? entity.getNoRekening()
+                    : reference.getNoRekening());
+
+            reference.setNpwp(entity.getNpwp() != null
+                    ? entity.getNpwp()
+                    : reference.getNpwp());
+
+            reference.setNamaIbu(entity.getNamaIbu() != null
+                    ? entity.getNamaIbu()
+                    : reference.getNamaIbu());
+
+            reference.setNobpjsKesehatan(entity.getNobpjsKesehatan() != null
+                    ? entity.getNobpjsKesehatan()
+                    : reference.getNobpjsKesehatan());
+
+            reference.setNobpjsKetenagakerjaan(entity.getNobpjsKetenagakerjaan() != null
+                    ? entity.getNobpjsKetenagakerjaan()
+                    : reference.getNobpjsKetenagakerjaan());
+
+            reference.setDomicileAddress(entity.getDomicileAddress() != null
+                    ? entity.getDomicileAddress()
+                    : reference.getDomicileAddress());
+
+            reference.setResidenceAddress(entity.getResidenceAddress() != null
+                    ? entity.getResidenceAddress()
+                    : reference.getResidenceAddress());
+
+            entity = reference;
+
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public void inactiveUser(User entity){
+        if (entity.getId() != null){
+            User reference = getDAO().findReference(entity.getId());
+
+            reference.setActive(entity.getActive().equals(Boolean.TRUE)
+                    ? Boolean.FALSE
+                    : reference.getActive());
+        }
     }
 }
