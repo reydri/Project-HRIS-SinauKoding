@@ -3,11 +3,15 @@ package com.sinaukoding.absence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "division")
+@SQLDelete(sql = "UPDATE division SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 @Setter
 @Getter
 @NoArgsConstructor
