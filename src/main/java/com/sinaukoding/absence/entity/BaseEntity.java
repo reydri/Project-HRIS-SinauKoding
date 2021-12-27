@@ -1,11 +1,10 @@
 package com.sinaukoding.absence.entity;
 
+import com.sinaukoding.absence.AbsenceApplication;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,31 +39,28 @@ public abstract class BaseEntity<T> implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
 
-    @Column(name = "created_by", columnDefinition = "BIGINT(20)")
-    @CreatedBy
-    private String createdBy;
+    @Column(name = "created_by")
+    private Long createdBy;
 
-    @Column(name = "deleted_by", columnDefinition = "BIGINT(20)")
-    @LastModifiedBy
-    private String deletedBy;
+    @Column(name = "deleted_by")
+    private Long deletedBy;
 
-    @Column(name = "updated_by", columnDefinition = "BIGINT(20)")
-    @LastModifiedBy
-    private String updatedBy;
+    @Column(name = "updated_by")
+    private Long updatedBy;
 
     @PrePersist
     protected void onCreate(){
         setCreatedTime(new Date());
+        setCreatedBy(AbsenceApplication.getCurrentUser() != null
+                ? AbsenceApplication.getCurrentUser().getId()
+                : 0);
     }
 
     @PreUpdate
     protected void onUpdate(){
         setUpdatedTime(new Date());
-    }
-
-    @PreRemove
-    protected void onRemove(){
-        setDeleted(Boolean.TRUE);
-        setDeletedTime(new Date());
+        setUpdatedBy(AbsenceApplication.getCurrentUser() != null
+                ? AbsenceApplication.getCurrentUser().getId()
+                : 0);
     }
 }
